@@ -35,4 +35,12 @@ public class ArticleService {
     public void deleteArticle(Long articleId) {
         articleRepository.delete(articleId);
     }
+
+    public List<Article> findArticleByNameAndDescription(String name, String description) {
+        return articleRepository.findByNameAndDescription(name, description);
+    }
+
+    public List<Article> findByProducer(String producer) {
+        return articleRepository.findByProducer(producer);
+    }
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Repository
 public class ArticleRepository {
@@ -45,5 +46,19 @@ public class ArticleRepository {
 
     public List<Article> findAll() {
         return new ArrayList<>(articles.values());
+    }
+
+    public List<Article> findByNameAndDescription(String name, String description) {
+        return articles.values().stream()
+                .filter(article ->
+                        article.name().equalsIgnoreCase(name) &&
+                                article.description().equalsIgnoreCase(description))
+                .collect(Collectors.toList());
+    }
+
+    public List<Article> findByProducer(String producer) {
+        return articles.values().stream()
+                .filter(article -> article.producer().equalsIgnoreCase(producer))
+                .collect(Collectors.toList());
     }
 }
