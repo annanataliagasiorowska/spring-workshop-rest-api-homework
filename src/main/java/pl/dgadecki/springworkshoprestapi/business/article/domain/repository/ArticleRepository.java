@@ -51,8 +51,8 @@ public class ArticleRepository {
     public List<Article> findByNameAndDescription(String name, String description) {
         return articles.values().stream()
                 .filter(article ->
-                        article.name().equalsIgnoreCase(name) &&
-                                article.description().equalsIgnoreCase(description))
+                        (name == null || article.name().equalsIgnoreCase(name)) &&
+                                (description == null || article.description().equalsIgnoreCase(description)))
                 .collect(Collectors.toList());
     }
 
