@@ -43,4 +43,16 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.fetchCustomerById(customerId), HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Customer>> findCustomersByLastName(
+            @RequestParam("lastName") String lastName) {
+        return new ResponseEntity<>(customerService.fetchCustomerByLastName(lastName), HttpStatus.OK);
+    }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<Customer> findCustomerByEmail(
+            @RequestParam("email") String email) {
+        return new ResponseEntity<>(customerService.fetchCustomerByEmail(email), HttpStatus.OK);
+    }
+
 }

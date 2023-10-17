@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Repository
 public class CustomerRepository {
@@ -45,5 +46,22 @@ public class CustomerRepository {
 
     public List<Customer> find() {
         return new ArrayList<>(customers.values());
+    }
+
+    public List<Customer> findByLastName(String lastName) {
+        return customers.values().stream()
+                .filter(customer -> customer.lastName().equalsIgnoreCase(lastName))
+                .collect(Collectors.toList());
+    }
+
+    public Customer findByEmail(String email) {
+        Customer customer = customers.values().stream()
+                .filter(c -> c.email().equals(email))
+                .findFirst()
+                .orElse(null);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer with the given email doesn't exist.");
+        }
+        return customer;
     }
 }

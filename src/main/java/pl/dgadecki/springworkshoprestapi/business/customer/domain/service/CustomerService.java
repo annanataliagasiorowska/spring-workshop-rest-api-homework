@@ -35,4 +35,12 @@ public class CustomerService {
     public void deleteCustomer(Long customerId) {
         customerRepository.delete(customerId);
     }
+
+    public Customer fetchCustomerByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
+    public List<Customer> fetchCustomerByLastName(String lastName) {
+        return customerRepository.findByLastName(lastName);
+    }
 }
