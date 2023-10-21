@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.dgadecki.springworkshoprestapi.business.article.domain.service.ArticleService;
 import pl.dgadecki.springworkshoprestapi.business.article.dto.Article;
+import pl.dgadecki.springworkshoprestapi.business.article.dto.api.*;
 
 import java.util.List;
 
@@ -18,19 +19,21 @@ public class ArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Article>> findAllArticles() {
-        return new ResponseEntity<>(articleService.findAllArticles(), HttpStatus.CREATED);
+    public FindAllArticlesResponse findAllArticles() {
+        return FindAllArticlesResponse.fromArticlesList(articleService.findAllArticles());
     }
 
     @PostMapping
-    public void createArticle(@RequestBody Article article) {
-        articleService.saveArticle(article);
+    public CreateArticleResponse createArticle(@RequestBody CreateArticleRequest createArticleRequest) {
+        Article createdArticle = articleService.saveArticle(createArticleRequest.toArticle());
+        return CreateArticleResponse.fromArticle(createdArticle);
     }
 
     @PutMapping("/{id}")
-    public void updateArticle(@PathVariable("id") Long articleId,
-                              @RequestBody Article article) {
-        articleService.updateArticle(articleId, article);
+    public UpdadeArticleResponse updateArticle(@PathVariable("id") Long articleId,
+                              @RequestBody UpdateArticleRequest updateArticleRequest) {
+        Article articleToUpdate = articleService.updateArticle(articleId, updateArticleRequest.toArticle());
+        return UpdadeArticleResponse.fromArticle(articleToUpdate);
     }
 
     @DeleteMapping("/{id}")
