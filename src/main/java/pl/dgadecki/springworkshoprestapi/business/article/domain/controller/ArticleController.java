@@ -62,10 +62,10 @@ public class ArticleController {
 
     @Operation(summary = "Update article", description = "Updates article found by id using data from request")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UpdadeArticleResponse updateArticle(@Parameter(description = "Identifier of the article to be updated") @PathVariable("id") Long articleId,
-                              @Parameter(description = "Data passed to update article") @RequestBody UpdateArticleRequest updateArticleRequest) {
+    public UpdateArticleResponse updateArticle(@Parameter(description = "Identifier of the article to be updated") @PathVariable("id") Long articleId,
+                                               @Parameter(description = "Data passed to update article") @RequestBody UpdateArticleRequest updateArticleRequest) {
         Article articleToUpdate = articleService.updateArticle(articleId, updateArticleRequest.toArticle());
-        return UpdadeArticleResponse.fromArticle(articleToUpdate);
+        return UpdateArticleResponse.fromArticle(articleToUpdate);
     }
 
     @Operation(summary = "Delete article", description = "Deletes article by given id")
