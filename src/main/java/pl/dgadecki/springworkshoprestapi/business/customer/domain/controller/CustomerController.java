@@ -1,13 +1,21 @@
 package pl.dgadecki.springworkshoprestapi.business.customer.domain.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.dgadecki.springworkshoprestapi.business.customer.domain.service.CustomerService;
 import pl.dgadecki.springworkshoprestapi.business.customer.dto.Customer;
+import pl.dgadecki.springworkshoprestapi.business.customer.dto.api.*;
 
-import java.util.List;
+@ApiResponses({
+        @ApiResponse(responseCode = "200", description = "The customers were successfully found", content = {
+                @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FindAllCustomersResponse.class))
+        })
 
+})
 @RestController
 @RequestMapping("/api/v1/customers")
 public class CustomerController {
@@ -18,19 +26,21 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Customer>> findAllCustomers() {
-        return new ResponseEntity<>(customerService.findAllCustomers(), HttpStatus.OK);
+    public FindAllCustomersResponse findAllCustomers() {
+        return FindAllCustomersResponse.fromCustomers(customerService.findAllCustomers());
     }
 
     @PostMapping
-    public void createCustomer(@RequestBody Customer customer) {
-        customerService.saveCustomer(customer);
+    public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequest createCustomerRequest) {
+        Customer createdCustomer = customerService.saveCustomer(createCustomerRequest.toCustomer());
+        return CreateCustomerResponse.fromCustomer(createdCustomer);
     }
 
     @PutMapping("/{id}")
-    public void updateCustomer(@PathVariable("id") Long customerId,
-                               @RequestBody Customer customer) {
-        customerService.updateCustomer(customerId, customer);
+    public UpdateCustomerResponse updateCustomer(@PathVariable("id") Long customerId,
+                                                 @RequestBody UpdateCustomerRequest updateCustomerRequest) {
+        Customer updatedCustomer = customerService.updateCustomer(customerId, updateCustomerRequest.toCustomer());
+        return UpdateCustomerResponse.fromCustomer(updatedCustomer);
     }
 
     @DeleteMapping("/{id}")
@@ -39,20 +49,20 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findCustomerById(@PathVariable("id") Long customerId) {
-        return new ResponseEntity<>(customerService.fetchCustomerById(customerId), HttpStatus.OK);
+    public FindCustomerResponse findCustomerById(@PathVariable("id") Long customerId) {
+        return FindCustomerResponse.fromCustomer(customerService.fetchCustomerById(customerId));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Customer>> findCustomersByLastName(
+    public FindAllCustomersResponse findCustomersByLastName(
             @RequestParam("lastName") String lastName) {
-        return new ResponseEntity<>(customerService.fetchCustomerByLastName(lastName), HttpStatus.OK);
+        return FindAllCustomersResponse.fromCustomers(customerService.fetchCustomerByLastName(lastName));
     }
 
     @GetMapping("/by-email")
-    public ResponseEntity<Customer> findCustomerByEmail(
+    public FindCustomerResponse findCustomerByEmail(
             @RequestParam("email") String email) {
-        return new ResponseEntity<>(customerService.fetchCustomerByEmail(email), HttpStatus.OK);
+        return FindCustomerResponse.fromCustomer(customerService.fetchCustomerByEmail(email));
     }
 
 }
