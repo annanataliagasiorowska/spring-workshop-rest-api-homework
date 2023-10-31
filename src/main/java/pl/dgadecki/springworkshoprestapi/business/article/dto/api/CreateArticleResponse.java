@@ -5,7 +5,7 @@ import pl.dgadecki.springworkshoprestapi.business.article.dto.Article;
 
 import java.math.BigDecimal;
 
-@Schema(description = "Response representing and article")
+@Schema(description = "Response representing an article")
 public record CreateArticleResponse(
         Long id,
         String name,

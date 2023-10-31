@@ -52,7 +52,7 @@ public class ArticleRepository {
         return articles.values().stream()
                 .filter(article ->
                         (name == null || article.name().equalsIgnoreCase(name)) &&
-                                (description == null || article.description().equalsIgnoreCase(description)))
+                                (description == null || article.description().toLowerCase().contains(description.toLowerCase())))
                 .collect(Collectors.toList());
     }
 

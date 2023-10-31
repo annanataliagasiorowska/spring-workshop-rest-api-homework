@@ -9,11 +9,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import pl.dgadecki.springworkshoprestapi.business.article.domain.service.ArticleService;
 import pl.dgadecki.springworkshoprestapi.business.article.dto.Article;
 import pl.dgadecki.springworkshoprestapi.business.article.dto.api.*;
+import pl.dgadecki.springworkshoprestapi.errorhandling.ErrorResponse;
 
 @Tag(name = "Article API", description = "All operations available for articles")
 @ApiResponses({

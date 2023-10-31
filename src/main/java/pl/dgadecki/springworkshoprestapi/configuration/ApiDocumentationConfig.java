@@ -44,14 +44,14 @@ public class ApiDocumentationConfig {
     public GroupedOpenApi articlesOpenApi() {
         return GroupedOpenApi.builder()
                 .group("Articles")
-                .pathsToMatch("api/v1/articles/**")
+                .pathsToMatch("/api/v1/articles/**")
                 .build();
     }
     @Bean
     public GroupedOpenApi customersOpenApi() {
         return GroupedOpenApi.builder()
                 .group("Customers")
-                .pathsToMatch("api/v1/customers/**")
+                .pathsToMatch("/api/v1/customers/**")
                 .build();
     }
 

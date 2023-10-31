@@ -5,7 +5,7 @@ import pl.dgadecki.springworkshoprestapi.business.article.dto.Article;
 
 import java.math.BigDecimal;
 
-@Schema(description = "Response representing updated article")
+@Schema(description = "Request representing article to update")
 public record UpdateArticleRequest (
         Long id,
         String name,
