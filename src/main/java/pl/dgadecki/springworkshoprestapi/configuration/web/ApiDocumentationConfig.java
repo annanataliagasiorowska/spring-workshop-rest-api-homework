@@ -1,4 +1,4 @@
-package pl.dgadecki.springworkshoprestapi.configuration;
+package pl.dgadecki.springworkshoprestapi.configuration.web;
 
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
